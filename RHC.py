@@ -1,16 +1,14 @@
 import math
-from termios import IXOFF
+
+def checkRange(num):
+    if num > 512 or num < -512:
+        print("Your input must be within the range [512, -512]")
+        exit()
 
 x = int(input("Enter a value for x:\n"))
+checkRange(x)
 y = int(input("Enter a value for y:\n"))
-
-if x > 512 or x < -512:
-    print("\"x\" must be within the [-512, 512] range.")
-    exit()
-
-if y > 512 or y < -512:
-    print("\"y\" must be within the [-512, 512] range.")
-    exit()
+checkRange(y)
 
 print()
 print(x)
