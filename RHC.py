@@ -51,12 +51,17 @@ def f(x, y):
 
 # Initial (x, y)
 localMin = f(x, y)
+origSol = localMin
+bestSolCoords = None
+bestSolNeighbor = None
 
 count = 0
 
 
 def RHC(x, y, p, z, localMin):
     global count
+    global bestSolCoords
+    global bestSolNeighbor
     for i in range(1, p+1):
         count += 1
         newx = x + random.uniform(z, -z)
@@ -75,6 +80,8 @@ def RHC(x, y, p, z, localMin):
 
         if newSol < localMin:
             localMin = newSol
+            bestSolCoords = [newx, newy]
+            bestSolNeighbor = count
             print(f"New local minimum is now {localMin}")
             RHC(x, y, p, z, localMin)
 
@@ -88,4 +95,22 @@ print(u'\u2500' * term_size.columns)
 
 lM = RHC(x, y, p, z, localMin)
 
-print(f"Solution found is {lM}")
+print()
+print()
+print("Results of RHC")
+print()
+print("Input")
+print(f"- Starting Point: ({x}, {y})")
+print(f"- p: {p}")
+print(f"- z: {z}")
+if seed:
+    print(f"- Seed: {seed}")
+print(f"- Solution: {origSol}")
+print()
+print("Best Solution")
+print(f"- Coordinates: ({bestSolCoords[0]}, {bestSolCoords[1]})")
+print(f"- Neighbor ID: {bestSolNeighbor}")
+print(f"- Total Neighbors: {count}")
+print(f"- Solution: {lM}")
+print()
+print()
