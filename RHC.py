@@ -44,17 +44,21 @@ print()
 
 
 def f(x, y):
-    ans = float((-y-47) * math.sin( math.sqrt( abs( (x/2) + (y+47) ) ) ) - x * math.sin( math.sqrt( abs(x - (y + 47) ) ) ) )
+    ans = float((-y-47) * math.sin(math.sqrt(abs((x/2) + (y+47)))
+                                   ) - x * math.sin(math.sqrt(abs(x - (y + 47)))))
     return ans
 
 
 # Initial (x, y)
 localMin = f(x, y)
 
-i = 0
-def RHC(x, y, p, z):
-    global i
+count = 0
+
+
+def RHC(x, y, p, z, localMin):
+    global count
     for i in range(1, p+1):
+        count += 1
         newx = x + random.uniform(z, -z)
         while newx > 512 or newx < -512:
             newx = x + random.uniform(z, -z)
@@ -63,11 +67,25 @@ def RHC(x, y, p, z):
         while newy > 512 or newy < -512:
             newy = y + random.uniform(z, -z)
 
-        print(f"{i} | f({newx}, {newy}) = {f(newx,newy)}")
+        newSol = f(newx, newy)
+        print(f"{count} | f({newx}, {newy}) = {newSol}")
+
+        if count % p == 0:
+            print(u'\u2500' * term_size.columns)
+
+        if newSol < localMin:
+            localMin = newSol
+            print(f"New local minimum is now {localMin}")
+            RHC(x, y, p, z, localMin)
+
+    return localMin
 
 
 print("Initial (x, y):")
 print(f"f({x}, {y}) = {localMin}")
 print()
+print(u'\u2500' * term_size.columns)
 
-RHC(x, y, p, z)
+lM = RHC(x, y, p, z, localMin)
+
+print(f"Solution found is {lM}")
