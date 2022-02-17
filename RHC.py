@@ -19,8 +19,7 @@ y = float(input("Enter a value for y:\n"))
 checkRange(y)
 
 p = int(input("Enter a value for p:\n"))
-inputz = float(input("Enter a value for z:\n"))
-z = [-inputz, inputz]
+z = float(input("Enter a value for z:\n"))
 
 seed = str(input("Would you like to use a seed? (y/n)\n"))
 if seed == "y" or seed == "yes":
@@ -45,41 +44,26 @@ print()
 
 
 def f(x, y):
-    ans = float(
-        -(y + 47) * math.sin(math.sqrt(abs((x/2) + (y + 47)))) -
-        x * math.sin(abs(x - (y+47)))
-    )
+    ans = float((-y-47) * math.sin( math.sqrt( abs( (x/2) + (y+47) ) ) ) - x * math.sin( math.sqrt( abs(x - (y + 47) ) ) ) )
     return ans
-
-
-def zFuncX(x):
-    newX = x + random.uniform(z[0], z[1])
-
-    if x > 512 or x < -512:
-        zFuncX(x)
-    else:
-        return newX
-
-
-def zFuncY(y):
-    newY = y + random.uniform(z[0], z[1])
-
-    if y > 512 or y < -512:
-        zFuncY(y)
-    else:
-        return newY
 
 
 # Initial (x, y)
 localMin = f(x, y)
 
-
+i = 0
 def RHC(x, y, p, z):
+    global i
     for i in range(1, p+1):
-        newX = zFuncX(x)
-        newY = zFuncY(y)
+        newx = x + random.uniform(z, -z)
+        while newx > 512 or newx < -512:
+            newx = x + random.uniform(z, -z)
 
-        print(f"{newX}, {newY}")
+        newy = y + random.uniform(z, -z)
+        while newy > 512 or newy < -512:
+            newy = y + random.uniform(z, -z)
+
+        print(f"{i} | f({newx}, {newy}) = {f(newx,newy)}")
 
 
 print("Initial (x, y):")
