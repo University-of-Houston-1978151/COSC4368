@@ -64,13 +64,13 @@ def RHC(x, y, p, z, localMin):
     global bestSolNeighbor
     for i in range(1, p+1):
         count += 1
-        newx = x + random.uniform(z, -z)
+        newx = x + random.uniform(-z, z, 1)
         while newx > 512 or newx < -512:
-            newx = x + random.uniform(z, -z)
+            newx = x + random.uniform(-z, z, 1)
 
-        newy = y + random.uniform(z, -z)
+        newy = y + random.uniform(-z, z)
         while newy > 512 or newy < -512:
-            newy = y + random.uniform(z, -z)
+            newy = y + random.uniform(-z, z)
 
         newSol = f(newx, newy)
         print(f"{count} | f({newx}, {newy}) = {newSol}")
