@@ -18,8 +18,10 @@ checkRange(x)
 y = float(input("Enter a value for y:\n"))
 checkRange(y)
 
-p = int(input("Enter a value for p:\n"))
-z = float(input("Enter a value for z:\n"))
+p = int(250)
+z = float(0.5)
+#p = int(input("Enter a value for p:\n"))
+#z = float(input("Enter a value for z:\n"))
 
 seed = str(input("Would you like to use a seed? (y/n)\n"))
 if seed == "y" or seed == "yes":
@@ -27,7 +29,7 @@ if seed == "y" or seed == "yes":
     random.seed(seed)
 else:
     seed = None
-    random.seed()
+    random.seed(99)
 
 # Print (x, y), p, and z
 print()
@@ -106,8 +108,26 @@ print(
     f"{count} | f({original['sol'][0]}, {original['sol'][1]}) = {original['fsol']}"
 )
 RHC(x, y, p-1, z, localMin)
-print(f"Best sol is {best['fsol']}")
 
+print()
+print()
+print("Results of RHC")
+print()
+print("Input")
+print(f"- Starting Point: ({original['sol'][0]}, {original['sol'][1]})")
+print(f"- p: {p}")
+print(f"- z: {z}")
+if seed:
+    print(f"- Seed: {seed}")
+print(f"- Solution: {original['fsol']}")
+print()
+print("Best Solution")
+print(f"- Solution: ({best['sol'][0]}, {best['sol'][1]})")
+print(f"- Neighbor ID: {best['neighbor']}")
+print(f"- Total Neighbors: {count}")
+print(f"- f(sol): {best['fsol']}")
+print()
+print()
 #print("Initial (x, y):")
 #print(f"f({x}, {y}) = {localMin}")
 # print()
