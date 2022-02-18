@@ -18,10 +18,8 @@ checkRange(x)
 y = float(input("Enter a value for y:\n"))
 checkRange(y)
 
-p = int(250)
-z = float(0.5)
-#p = int(input("Enter a value for p:\n"))
-#z = float(input("Enter a value for z:\n"))
+p = int(input("Enter a value for p:\n"))
+z = float(input("Enter a value for z:\n"))
 
 seed = str(input("Would you like to use a seed? (y/n)\n"))
 if seed == "y" or seed == "yes":
@@ -29,7 +27,7 @@ if seed == "y" or seed == "yes":
     random.seed(seed)
 else:
     seed = None
-    random.seed(99)
+    random.seed(23)
 
 # Print (x, y), p, and z
 print()
