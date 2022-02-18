@@ -50,67 +50,87 @@ def f(x, y):
 
 
 # Initial (x, y)
-localMin = f(x, y)
-origSol = localMin
-bestSolCoords = None
-bestSolNeighbor = None
+original = {
+    "sol": [x, y],
+    "fsol": f(x, y),
+    "p": p
+}
+best = {
+    "sol": [x, y],
+    "fsol": f(x, y),
+    "neighbor": None
+}
 
-count = 0
+localMin = f(x, y)
+
+count = 1
+check = False
 
 
 def RHC(x, y, p, z, localMin):
+    global original
+    global best
     global count
-    global bestSolCoords
-    global bestSolNeighbor
-    for i in range(1, p+1):
-        count += 1
-        newx = x + random.uniform(z, -z)
-        while newx > 512 or newx < -512:
-            newx = x + random.uniform(z, -z)
+    global check
 
-        newy = y + random.uniform(z, -z)
-        while newy > 512 or newy < -512:
-            newy = y + random.uniform(z, -z)
+    p -= 1
+    count += 1
 
-        newSol = f(newx, newy)
-        print(f"{count} | f({newx}, {newy}) = {newSol}")
+    newX = x + random.uniform(-z, z)
+    while x > 512 or x < -512:
+        newX = x + random.uniform(-z, z)
+    newY = y + random.uniform(-z, z)
+    while y > 512 or y < -512:
+        newY = y + random.uniform(-z, z)
 
-        if count % p == 0:
-            print(u'\u2500' * term_size.columns)
+    newSol = f(newX, newY)
+    print(f"{count} | f({newX}, {newY}) = {newSol}")
 
-        if newSol < localMin:
-            localMin = newSol
-            bestSolCoords = [newx, newy]
-            bestSolNeighbor = count
-            print(f"New local minimum is now {localMin}")
-            RHC(x, y, p, z, localMin)
+    if newSol < best['fsol']:
+        check = True
+        best['fsol'] = newSol
+        best['sol'] = [newX, newY]
+        best['neighbor'] = count
+        print(f"New local minimum is now {best['fsol']}")
 
-    return localMin
+    if p != 0:
+        RHC(x, y, p, z, localMin)
+    else:
+        print(u'\u2500' * term_size.columns)
+        if check == True:
+            check = False
+            RHC(x, y, original['p'], z, best['fsol'])
 
 
-print("Initial (x, y):")
-print(f"f({x}, {y}) = {localMin}")
-print()
-print(u'\u2500' * term_size.columns)
+print(
+    f"{count} | f({original['sol'][0]}, {original['sol'][1]}) = {original['fsol']}"
+)
+RHC(x, y, p-1, z, localMin)
+print(f"Best sol is {best['fsol']}")
 
-lM = RHC(x, y, p, z, localMin)
+#print("Initial (x, y):")
+#print(f"f({x}, {y}) = {localMin}")
+# print()
+#print(u'\u2500' * term_size.columns)
 
-print()
-print()
-print("Results of RHC")
-print()
-print("Input")
-print(f"- Starting Point: ({x}, {y})")
-print(f"- p: {p}")
-print(f"- z: {z}")
-if seed:
-    print(f"- Seed: {seed}")
-print(f"- Solution: {origSol}")
-print()
-print("Best Solution")
-print(f"- Solution: ({bestSolCoords[0]}, {bestSolCoords[1]})")
-print(f"- Neighbor ID: {bestSolNeighbor}")
-print(f"- Total Neighbors: {count}")
-print(f"- f(sol): {lM}")
-print()
-print()
+#lM = RHC(x, y, p, z, localMin)
+
+# print()
+# print()
+#print("Results of RHC")
+# print()
+# print("Input")
+#print(f"- Starting Point: ({x}, {y})")
+#print(f"- p: {p}")
+#print(f"- z: {z}")
+# if seed:
+#    print(f"- Seed: {seed}")
+#print(f"- Solution: {origSol}")
+# print()
+##print("Best Solution")
+#print(f"- Solution: ({bestSolCoords[0]}, {bestSolCoords[1]})")
+#print(f"- Neighbor ID: {bestSolNeighbor}")
+#print(f"- Total Neighbors: {count}")
+#print(f"- f(sol): {lM}")
+# print()
+# print()
