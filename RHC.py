@@ -27,7 +27,7 @@ if seed == "y" or seed == "yes":
     random.seed(seed)
 else:
     seed = None
-    random.seed(23)
+    random.seed()
 
 # Print (x, y), p, and z
 print()
